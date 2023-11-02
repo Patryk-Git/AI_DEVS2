@@ -28,17 +28,29 @@ class Homework:
         url = f"https://zadania.aidevs.pl/task/{token}"
 
         auth = requests.get(url)
+        json_output = json.loads(auth.text)
+        with open("context.json", "w") as outfile:
+            json.dump(json_output, outfile)
 
-        return json.loads(auth.text)
+        return json_output
 
 
     def submit_homework(self, answer: json):
         print("Submitting homework")
         url = f"https://zadania.aidevs.pl/answer/{self.token}"
 
-        print(answer)
+        answer_json = {
+            'answer': answer
+        }
 
-        result = requests.post(url=url, json=answer)
+        result = requests.post(url=url, json=answer_json)
 
         print(result.text)
+
+    def get_answer_from_api_response(self, api_json: json):
+
+        result = api_json['choices'][0]
+        content = result['message']['content']
+
+        return content
 

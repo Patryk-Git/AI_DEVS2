@@ -28,10 +28,9 @@ class Homework(Homework):
         result = requests.post(self.open_ai_ulr, json=data, headers=header)
 
         result_json = json.loads(result.text)
-        print(result_json)
-        result = result_json['choices'][0]
+        content = self.get_answer_from_api_response(result_json)
 
-        content = json.loads(result['message']['content'])
+        print(content)
 
         print("Answer created")
 

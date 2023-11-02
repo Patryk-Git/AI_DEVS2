@@ -1,10 +1,1 @@
-{
-    "code": 0,
-    "msg": "please write blog post for the provided outline",
-    "blog": [
-        "Wst\u0119p: kilka s\u0142\u00f3w na temat historii pizzy",
-        "Niezb\u0119dne sk\u0142adniki na pizz\u0119",
-        "Robienie pizzy",
-        "Pieczenie pizzy w piekarniku"
-    ]
-}
+{"code": 0, "msg": "please write blog post for the provided outline", "blog": ["Wst\u0119p: kilka s\u0142\u00f3w na temat historii pizzy", "Niezb\u0119dne sk\u0142adniki na pizz\u0119", "Robienie pizzy", "Pieczenie pizzy w piekarniku"]}
