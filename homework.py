@@ -32,6 +32,8 @@ class Homework:
         with open("context.json", "w") as outfile:
             json.dump(json_output, outfile)
 
+        print(json_output)
+
         return json_output
 
 
