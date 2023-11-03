@@ -37,19 +37,19 @@ class Homework:
         return json_output
 
 
-    def submit_homework(self, answer: json):
+    def submit_homework(self, answer: str):
         print("Submitting homework")
         url = f"https://zadania.aidevs.pl/answer/{self.token}"
 
         answer_json = {
             'answer': answer
         }
-
+        print('testt')
         result = requests.post(url=url, json=answer_json)
-
+        print(result)
         print(result.text)
 
-    def get_answer_from_api_response(self, api_json: json):
+    def get_answer_from_api_response(self, api_json: json) -> str:
 
         result = api_json['choices'][0]
         content = result['message']['content']

@@ -28,7 +28,7 @@ class Homework(Homework):
 
         return answer
 
-    def guardrails(self, question: str, answer: str):
+    def guardrails(self, question: str, answer: str) -> str:
 
         header = {
             "Authorization": f"Bearer {self.bearer}"

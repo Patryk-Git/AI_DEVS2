@@ -12,7 +12,7 @@ class Homework(Homework):
         self.bearer = bearer
         self.model = 'text-embedding-ada-002'
 
-    def create_answer(self, data_str: str):
+    def create_answer(self, data_str: str) -> json:
         print("Creating answer")
         embedding_url = 'https://api.openai.com/v1/embeddings'
 
