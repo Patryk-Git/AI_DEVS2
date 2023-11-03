@@ -10,7 +10,7 @@ class Homework(Homework):
         self.open_ai_ulr = "https://api.openai.com/v1/chat/completions"
         self.bearer = bearer
 
-    def create_answer(self, data_json: json):
+    def create_answer(self, data_json: json) -> str:
 
         print("Creating answer")
         blog = data_json['blog']
