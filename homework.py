@@ -44,7 +44,6 @@ class Homework:
         answer_json = {
             'answer': answer
         }
-        print('testt')
         result = requests.post(url=url, json=answer_json)
         print(result)
         print(result.text)
