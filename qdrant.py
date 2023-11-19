@@ -4,7 +4,8 @@ from qdrant_client.http.models import Filter, FieldCondition, MatchValue, Distan
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
 
-class Quadrant():
+
+class Quadrant:
     def __init__(self, collection_name: str) -> None:
         load_dotenv()
         self.ulr = os.getenv("QDRANT_URL")
@@ -20,7 +21,8 @@ class Quadrant():
     def create_collection(self, size: int):
 
         collections = self.client.get_collections()
-        indexed = next((collection for collection in collections.collections if collection.name == self.collection_name), None)
+        indexed = next(
+            (collection for collection in collections.collections if collection.name == self.collection_name), None)
         if not indexed:
             self.client.create_collection(
                 collection_name=self.collection_name,
@@ -59,4 +61,3 @@ class Quadrant():
         )
 
         return search_result
-

@@ -1,0 +1,4 @@
+Odpowiedz jako tablica
+### Contex '''
+["merkury", "wenus",...]
+Dokończ ciąg
