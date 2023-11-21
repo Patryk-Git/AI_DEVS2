@@ -2,6 +2,7 @@ import requests
 import json
 import logging
 
+
 class Homework:
 
     def __init__(self, api_key: str, task_name: str) -> None:
@@ -9,7 +10,6 @@ class Homework:
         self.api_key = api_key
         self.task_name = task_name
         self.ai_devs_url = f"https://zadania.aidevs.pl/token/{task_name}"
-
 
     def get_task(self) -> json:
         print("Getting task")
@@ -23,7 +23,6 @@ class Homework:
         response_dict = json.loads(token_json.text)
         token = response_dict["token"]
 
-
         self.token = token
         url = f"https://zadania.aidevs.pl/task/{token}"
 
@@ -35,7 +34,6 @@ class Homework:
         print(json_output)
 
         return json_output
-
 
     def submit_homework(self, answer: str):
         print("Submitting homework")
@@ -50,8 +48,7 @@ class Homework:
 
     def get_answer_from_api_response(self, api_json: json) -> str:
 
-        # result = api_json['choices'][0]
-        # content = result['message']['content']
+        result = api_json['choices'][0]
+        content = result['message']['content']
 
-        return api_json
-
+        return content
