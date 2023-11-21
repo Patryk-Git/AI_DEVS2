@@ -14,9 +14,11 @@ if __name__ == "__main__":
     data = devs.get_task()
     question = data['question']
     print(question)
-    # currency = devs.get_currency()
-    # print(currency[0]['rates'])
     case = devs.ask_model(question)
-
     print(case)
+    function_call = case['choices'][0]['message']['function_call']
+    answer = devs.create_answer(function_call, question)
+    devs.submit_homework(answer)
+
+
 
