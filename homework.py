@@ -50,8 +50,8 @@ class Homework:
 
     def get_answer_from_api_response(self, api_json: json) -> str:
 
-        result = api_json['choices'][0]
-        content = result['message']['content']
+        # result = api_json['choices'][0]
+        # content = result['message']['content']
 
-        return content
+        return api_json
 

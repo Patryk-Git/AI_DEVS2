@@ -4,6 +4,12 @@ import json
 import openai
 
 
+def get_exchange_rate(currency: str):
+    url = f"http://api.nbp.pl/api/exchangerates/tables/A/{currency}/last/"
+
+    response = requests.get(url)
+
+    return json.loads(response.text)["rates"][0]["mid"]
 class Homework(Homework):
 
     def __init__(self, api_key, task_name, bearer):
@@ -11,22 +17,48 @@ class Homework(Homework):
         self.open_ai_ulr = "https://api.openai.com/v1/chat/completions"
         self.bearer = bearer
 
-    def get_currency(self):
-        url = "http://api.nbp.pl/api/exchangerates/tables/A/"
 
-        response = requests.get(url)
 
-        return response.text
+    def ask_model(self, user_content):
+        functions = [
+            {
+                "name": "get_exchange_rate",
+                "description": "gets current exchange rate of the given currency to fixed default currency",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "currency": {"type": "string", "description": "currency for which exchange rate is required"},
+                    },
+                    "required": ["currency"]
+                },
+            },
+            {
+                "name": "general_question",
+                "description":
+                    "a function returning answer to general question not related to exchange rates and countries' populations",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "question": {"type": "string", "description": "a general question"},
+                    },
+                    "required": ["question"]
+                },
+            }
+        ]
+        prompt = (
+            "You will be asked questions about a population of a given country, exchange rate of a given currency "
+            "and other general question. For country name use English name only. "
+            "For currency use currency symbol according to ISO 4217. For general questions use the same language.")
 
-    def ask_model(self, system_content: str = None, user_content: str = None):
         header = {
             "Authorization": f"Bearer {self.bearer}"
         }
-
+        user_content = 'Jaki jest kurs dolara'
         data = {
             "messages": [{'role': 'system',
-                          'content': system_content},
+                          'content': prompt},
                          {'role': 'user', 'content': user_content}],
+            "functions": functions,
             'model': 'gpt-3.5-turbo'
         }
 
@@ -34,62 +66,6 @@ class Homework(Homework):
 
         result_json = json.loads(result.text)
         answer = self.get_answer_from_api_response(result_json)
-
-        return answer
-
-    def check_question(self, question: str):
-        tools = [
-            {
-                "type": "function",
-                "function": {
-                    "name": "get_currency",
-                    "description": "Get the currency",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "location": {
-                                "type": "string",
-                                "description": "The city and state, e.g. San Francisco, CA",
-                            },
-                            "format": {
-                                "type": "string",
-                                "enum": ["celsius", "fahrenheit"],
-                                "description": "The temperature unit to use. Infer this from the users location.",
-                            },
-                        },
-                        "required": ["location", "format"],
-                    },
-                }
-            },
-            {
-                "type": "function",
-                "function": {
-                    "name": "get_n_day_weather_forecast",
-                    "description": "Get an N-day weather forecast",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "location": {
-                                "type": "string",
-                                "description": "The city and state, e.g. San Francisco, CA",
-                            },
-                            "format": {
-                                "type": "string",
-                                "enum": ["celsius", "fahrenheit"],
-                                "description": "The temperature unit to use. Infer this from the users location.",
-                            },
-                            "num_days": {
-                                "type": "integer",
-                                "description": "The number of days to forecast",
-                            }
-                        },
-                        "required": ["location", "format", "num_days"]
-                    },
-                }
-            },
-        ]
-
-        answer = self.ask_model(system_content, question)
 
         return answer
 

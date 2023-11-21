@@ -14,8 +14,9 @@ if __name__ == "__main__":
     data = devs.get_task()
     question = data['question']
     print(question)
-    case = devs.check_question(question)
+    # currency = devs.get_currency()
+    # print(currency[0]['rates'])
+    case = devs.ask_model(question)
 
-    if case == 1:
-
+    print(case)
 
