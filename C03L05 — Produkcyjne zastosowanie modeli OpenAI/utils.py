@@ -3,6 +3,7 @@ from homework import Homework
 import json
 from uuid import uuid4
 
+
 class Homework(Homework):
 
     def __init__(self, api_key, task_name, bearer):
@@ -28,12 +29,9 @@ class Homework(Homework):
 
         result_json = json.loads(result.text)
 
-
-
         return result_json['data'][0]['embedding']
 
-    def create_answer(self, data: str, question:str) -> str:
-
+    def create_answer(self, data: str, question: str) -> str:
         print("Creating answer")
 
         header = {
@@ -64,7 +62,6 @@ class Homework(Homework):
         return parsed_json
 
     def create_documents(self, json_data: json, collection_name: str) -> list:
-
         documents_with_meta = []
         for record in json_data:
             document_with_meta = [

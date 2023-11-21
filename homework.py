@@ -47,6 +47,7 @@ class Homework:
         print(result.text)
 
     def get_answer_from_api_response(self, api_json: json) -> str:
+
         result = api_json['choices'][0]
         content = result['message']['content']
 
